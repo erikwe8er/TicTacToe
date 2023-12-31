@@ -1,6 +1,5 @@
 import tkinter as tk
 import tkinter.font as font
-import time
  
 class TicTacToe:
     def __init__(self):
@@ -19,7 +18,7 @@ class TicTacToe:
             if(cnt<3):
                 print("-----")
     
-    def check_winner(self):
+    def check_winner(self,window=None):
         for i in range(3):
             if(self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0] != " "):
                 self.winner = self.board[i][0]
@@ -30,10 +29,19 @@ class TicTacToe:
         if(self.board[0][0] == self.board[1][1] == self.board[2][2] or self.board[0][2] == self.board[1][1] == self.board[2][0]):
             if(self.board[1][1] != " "):
                 self.winner = self.board[1][1]
-                if(self.board[0][0] == self.board[1][1]):
+                if(self.board[0][0] == self.board[1][1] == self.board[2][2]):
                     self.winning = [(0,0),(1,1),(2,2)]
                 else:
                     self.winning = [(0,2),(1,1),(2,0)]
+                    
+        if(self.winner != None or self.turn == 10):
+            for button in window.winfo_children():
+                grid_info = button.grid_info()
+                if((grid_info["row"],grid_info["column"]) in self.winning):
+                    button["fg"] = "green"
+                else:
+                    button["state"] = "disabled"
+            
     
     def terminal_game(self,window):
         window.destroy()
@@ -72,13 +80,7 @@ class TicTacToe:
             self.board[place[0]][place[1]] = self.player2  
             button["text"] = self.player2  
             self.turn += 1
-        self.check_winner()
-        if(self.winner != None or self.turn == 10):
-            for button in window.winfo_children():
-                button.configure(state="disabled")
-            
-            
-            
+        self.check_winner(window)
             
     def window_game(self,choose_window):
         choose_window.destroy()
@@ -113,7 +115,7 @@ class TicTacToe:
         window.mainloop()
        
             
-    def play_game(self):
+    def play_game(self,window = None):
         choose_window = tk.Tk(className=" Choose Window")
         choose_window.geometry("200x110")
         choose_window.resizable(0,0)
