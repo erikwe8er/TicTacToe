@@ -22,7 +22,7 @@ class TicTacToe:
         for i in range(3):
             if(self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0] != " "):
                 self.winner = self.board[i][0]
-                self.winning = [(i,0),(i,1),(i,1)]
+                self.winning = [(i,0),(i,1),(i,2)]
             elif(self.board[0][i] == self.board[1][i] == self.board[2][i] and self.board[0][i] != " "):
                 self.winner = self.board[0][i]
                 self.winning = [(0,i),(1,i),(2,i)]
